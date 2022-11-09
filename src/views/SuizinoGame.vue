@@ -237,7 +237,7 @@ const checkGameStatus = () =>{
           🎉 Satoshi Flip 🎉
         </h2>
         <p>
-          Spin now and win big rewards!
+          Guess the flip and win big rewards!
         </p>
 
       </div>
