@@ -1,0 +1,234 @@
+{
+    "jsonrpc": "2.0",
+    "result": {
+        "EffectsCert": {
+            "certificate": {
+                "transactionDigest": "Asw+VyQnvJShyDQoWHjM5oGn77fXYVWNSBT5U6LGYb4=",
+                "data": {
+                    "transactions": [
+                        {
+                            "Call": {
+                                "package": {
+                                    "objectId": "0x98f675027df57e925d91db61c97c709f62c031ae",
+                                    "version": 1,
+                                    "digest": "EXuPlYSBSfByge+YHJY5LUowf109PPGRwDBP3X4sRKA="
+                                },
+                                "module": "satoshi_flip",
+                                "function": "end_game",
+                                "arguments": [
+                                    "0xa423d7b39ed229c8efb9688723cd025d89a716a6",
+                                    "supersecret"
+                                ]
+                            }
+                        }
+                    ],
+                    "sender": "0x78e712416346aa7f357dcc640ecf918112a86f73",
+                    "gasPayment": {
+                        "objectId": "0xfca9d1ab83eff9989cea300474da5a8699f33bf6",
+                        "version": 2,
+                        "digest": "90UPSZfwOT65iKNy2zOrQVzH903FZRuI37A5hdlKXYU="
+                    },
+                    "gasBudget": 10000
+                },
+                "txSignature": "Afw/VGMCvTg4Ae0PXTCZUWeUJOJVjgIo1GfASpy9Fdv9ZE6rYdaEoWC0xi5Y4CsIUtkqz1SKgsTidv4KTOGJg+sBAm/xATHBfYiKVkMpXxE1S6QnwKmFqYb96gDZPoMuRT6g",
+                "authSignInfo": {
+                    "epoch": 0,
+                    "signature": "qyYcaeYgegvO+vVEAAqzDEWWoSPUjJnI+JmMCpcqmx48zSpyTGQ+VE4GAtE2Vq7r",
+                    "signers_map": [
+                        58,
+                        48,
+                        0,
+                        0,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        2,
+                        0,
+                        16,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0,
+                        3,
+                        0
+                    ]
+                }
+            },
+            "effects": {
+                "transactionEffectsDigest": "okDsOITYQ7B0rhb1q+XMuOAoM+gYQXQW6Tf2IFIfwUE=",
+                "effects": {
+                    "status": {
+                        "status": "success"
+                    },
+                    "gasUsed": {
+                        "computationCost": 308,
+                        "storageCost": 69,
+                        "storageRebate": 40
+                    },
+                    "sharedObjects": [
+                        {
+                            "objectId": "0xa423d7b39ed229c8efb9688723cd025d89a716a6",
+                            "version": 3,
+                            "digest": "zKsJrIfQLFRtyDC/Zs+xJZ6EYVjM0s8+hPyhaqvrv0c="
+                        }
+                    ],
+                    "transactionDigest": "Asw+VyQnvJShyDQoWHjM5oGn77fXYVWNSBT5U6LGYb4=",
+                    "created": [
+                        {
+                            "owner": {
+                                "AddressOwner": "0x78e712416346aa7f357dcc640ecf918112a86f73"
+                            },
+                            "reference": {
+                                "objectId": "0x1af6473be7aa00a31cb361f30f7a10ccbc335cd1",
+                                "version": 1,
+                                "digest": "Eur085sgscbobnjcQWWjQpgBdXvBvJlW2WhceAnxZJs="
+                            }
+                        },
+                        {
+                            "owner": {
+                                "AddressOwner": "0x8c1e030506beaddff7ab2f9923813c576fe29d02"
+                            },
+                            "reference": {
+                                "objectId": "0x3fac7305c11e71ce71c9429303f635f5da5f60e4",
+                                "version": 1,
+                                "digest": "kaxCjVABzxDRxfDObHYYo0vzN+aL9tIvAAXhSE4pFrM="
+                            }
+                        }
+                    ],
+                    "mutated": [
+                        {
+                            "owner": {
+                                "Shared": {
+                                    "initial_shared_version": 1
+                                }
+                            },
+                            "reference": {
+                                "objectId": "0xa423d7b39ed229c8efb9688723cd025d89a716a6",
+                                "version": 4,
+                                "digest": "p7UCkj3GYyzZ4/op+o+z8OlV6mDSZRVLPEe4axxiS0w="
+                            }
+                        },
+                        {
+                            "owner": {
+                                "AddressOwner": "0x78e712416346aa7f357dcc640ecf918112a86f73"
+                            },
+                            "reference": {
+                                "objectId": "0xfca9d1ab83eff9989cea300474da5a8699f33bf6",
+                                "version": 3,
+                                "digest": "6ZHIfGRowL1jB76WbkQPU0G5LMYXM6HDqgHD9SgH66g="
+                            }
+                        }
+                    ],
+                    "gasObject": {
+                        "owner": {
+                            "AddressOwner": "0x78e712416346aa7f357dcc640ecf918112a86f73"
+                        },
+                        "reference": {
+                            "objectId": "0xfca9d1ab83eff9989cea300474da5a8699f33bf6",
+                            "version": 3,
+                            "digest": "6ZHIfGRowL1jB76WbkQPU0G5LMYXM6HDqgHD9SgH66g="
+                        }
+                    },
+                    "events": [
+                        {
+                            "coinBalanceChange": {
+                                "packageId": "0x0000000000000000000000000000000000000002",
+                                "transactionModule": "gas",
+                                "sender": "0x78e712416346aa7f357dcc640ecf918112a86f73",
+                                "changeType": "Gas",
+                                "owner": {
+                                    "AddressOwner": "0x78e712416346aa7f357dcc640ecf918112a86f73"
+                                },
+                                "coinType": "0x2::sui::SUI",
+                                "coinObjectId": "0xfca9d1ab83eff9989cea300474da5a8699f33bf6",
+                                "version": 2,
+                                "amount": -337
+                            }
+                        },
+                        {
+                            "coinBalanceChange": {
+                                "packageId": "0x98f675027df57e925d91db61c97c709f62c031ae",
+                                "transactionModule": "satoshi_flip",
+                                "sender": "0x78e712416346aa7f357dcc640ecf918112a86f73",
+                                "changeType": "Receive",
+                                "owner": {
+                                    "AddressOwner": "0x78e712416346aa7f357dcc640ecf918112a86f73"
+                                },
+                                "coinType": "0x2::sui::SUI",
+                                "coinObjectId": "0x1af6473be7aa00a31cb361f30f7a10ccbc335cd1",
+                                "version": 1,
+                                "amount": 9998277
+                            }
+                        },
+                        {
+                            "coinBalanceChange": {
+                                "packageId": "0x98f675027df57e925d91db61c97c709f62c031ae",
+                                "transactionModule": "satoshi_flip",
+                                "sender": "0x78e712416346aa7f357dcc640ecf918112a86f73",
+                                "changeType": "Receive",
+                                "owner": {
+                                    "AddressOwner": "0x8c1e030506beaddff7ab2f9923813c576fe29d02"
+                                },
+                                "coinType": "0x2::sui::SUI",
+                                "coinObjectId": "0x3fac7305c11e71ce71c9429303f635f5da5f60e4",
+                                "version": 1,
+                                "amount": 1000
+                            }
+                        },
+                        {
+                            "mutateObject": {
+                                "packageId": "0x98f675027df57e925d91db61c97c709f62c031ae",
+                                "transactionModule": "satoshi_flip",
+                                "sender": "0x78e712416346aa7f357dcc640ecf918112a86f73",
+                                "objectType": "0x98f675027df57e925d91db61c97c709f62c031ae::satoshi_flip::Game",
+                                "objectId": "0xa423d7b39ed229c8efb9688723cd025d89a716a6",
+                                "version": 4
+                            }
+                        }
+                    ],
+                    "dependencies": [
+                        "eSujs67vRCgiLbgQJTzcnmBrXmlTM3aMJYFRVpKtI6o=",
+                        "sSr6gH1bUdFuY4XbDK5VP8ROP8n1KDVYfmua2SN4CIw=",
+                        "2er45nIDtzvhvjz8Ag5ijxH/IjbjqjCd514MJmquHBo="
+                    ]
+                },
+                "authSignInfo": {
+                    "epoch": 0,
+                    "signature": "rVwnCU8S7fpjk7HqlWQNwR+TuPLakvQAD8FJsno+D0NtvfVE4yR72QNKpTmVXARl",
+                    "signers_map": [
+                        58,
+                        48,
+                        0,
+                        0,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        2,
+                        0,
+                        16,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0,
+                        2,
+                        0,
+                        3,
+                        0
+                    ]
+                }
+            },
+            "confirmed_local_execution": true
+        }
+    },
+    "id": 1
+}

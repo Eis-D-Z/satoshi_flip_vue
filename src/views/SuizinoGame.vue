@@ -1,8 +1,9 @@
 <script setup>
+import { SHA3 } from 'sha3';
 import {ref, onMounted,onUnmounted, reactive} from 'vue'
 import {logo} from "../assets/icons";
 import {useAuthStore} from "../stores/auth";
-import {casinoAddress, moduleAddress} from "../helpers/constants";
+import {bankerAddress, moduleAddress} from "../helpers/constants";
 import {useWallet} from "../helpers/wallet";
 import {useUiStore} from "../stores/ui";
 
@@ -13,11 +14,17 @@ const {executeMoveCall, getAddress, getSuitableCoinId} = useWallet();
 const gameStatuses = {
   STANDBY: 'STANDBY',
   LOSS: 'LOSS',
-  WIN: 'WIN'
+  WIN: 'WIN',
+  INITIALIZED: 'INITIALIZED'
 }
-const spinningList = ["❌", "🦄", "✅", "🐻️", "🤑"];
+let gameAddress = "";
+let currentSecret = "";
+let currentGameId = ref("");
+const playerGuess = ref("1");
+const spinningList = ["heads", "tails"];
 const gameStatus = ref(gameStatuses.STANDBY);
 const gameStarted = ref(false);
+const gameInitialized = ref(false);
 const isLoading = ref(false);
 const gameResultsObject = ref({});
 const gameResults = ref([]);
@@ -28,18 +35,6 @@ const wheelSlots = reactive([
     started: false,
     randomSlides: [],
     ended: false
-  },
-  {
-    id: 1,
-    randomSlides: [],
-    started: false,
-    ended: false
-  },
-  {
-    id: 2,
-    randomSlides: [],
-    started: false,
-    ended: false
   }
 ]);
 
@@ -48,6 +43,41 @@ onMounted(()=>{
   initialSpinInterval.value = setupSpinningInterval(120);
 });
 
+const getNewSecretAndHash = () => {
+  const secret = String(Math.floor(Math.random() * 10000000));
+  const h = new SHA3(256);
+  h.update(secret);
+  hash = h.digest();
+  return {secret: secret, hash: hash};
+}
+
+const startGame = () => {
+  if (gameInitialized.value || gameStarted.value) return;
+  const coinId = getSuitableCoinId(10000);
+  const {secret, hash} = getNewSecret();
+  currentSecret = secret;
+  const minBet = 100;
+
+
+  executeMoveCall({
+    packageObjectId: moduleAddress,
+    module: 'satoshi_flip',
+    tyoeArguments: [],
+    function: "start_game",
+    arguments: [hash, coinId, minBet],
+    gasBudget: 1000
+  }).then(res => {
+    const status = res?.EffectsCert?.effects?.status?.status;
+    if (status === "success") {
+      let newGameResult = res?.EffectsCert?.effects?.effects?.events?.find(x => x.newObject) || {};
+      currentGameId.value = newGameResult.newObject.objectId;
+      gameInitialized.value = true;
+
+    }
+    
+  })
+}
+
 const executeGamble = () => {
   const address = getAddress();
   if(!address) return;
@@ -55,27 +85,28 @@ const executeGamble = () => {
   resetGame();
   gameStarted.value = true;
   isLoading.value = true;
+  if (!currentGameId) return;
 
-  const coinId = getSuitableCoinId(6000)
+  const coinId = getSuitableCoinId(500)
 
   executeMoveCall({
     packageObjectId: moduleAddress,
-    module: 'Suizino_core',
+    module: 'satoshi_flip',
     typeArguments: [],
-    arguments: [casinoAddress, coinId],
+    arguments: [currentGameId, playerGuess.value, coinId],
     function: 'gamble',
-    gasBudget: 1000
+    gasBudget: 10000
   }).then(res =>{
     totalGames.value++;
-    const status = res?.effects?.status?.status;
+    const status = res?.EffectsCert?.effects?.status?.status;
 
     if(status === 'success'){
-      let SuizinoEventResult = res?.effects?.events?.find(x => x.moveEvent) || {};
-
-      let fields = SuizinoEventResult?.moveEvent?.fields;
-
-      gameResultsObject.value = fields;
-      gameResults.value = [fields.slot_1, fields.slot_2, fields.slot_3];
+      // If it is a success then we can end the game
+      
+      // let FlipEventResult = res?.effects?.events?.find(x => x.moveEvent) || {};
+      // let fields = FlipEventResult?.moveEvent?.fields;
+      // gameResultsObject.value = fields;
+      // gameResults.value = [fields.slot_1, fields.slot_2, fields.slot_3];
 
       // We just mark all slots as "started" and we let the interval that is already running
       // take care of showing the results. To make it more smooth,
@@ -113,7 +144,7 @@ const setupSpinningInterval = (timeout) => {
         if(slot.id === wheelSlots.length - 1) checkGameStatus();
         continue;
       }
-      slot.randomSlides = [...spinningList].sort(() => 0.5 - Math.random()).slice(0,3);
+      slot.randomSlides = [...spinningList].sort(() => 0.5 - Math.random()).slice(0,2);
     }
   }, timeout);
 }
@@ -190,7 +221,7 @@ const checkGameStatus = () =>{
 
       <div class="py-6 text-center">
         <h2 class="text-3xl font-bold">
-          🎉 Welcome to Suizino 🎉
+          🎉 Satoshi Flip 🎉
         </h2>
         <p>
           Spin now and win big rewards!
@@ -237,7 +268,7 @@ const checkGameStatus = () =>{
           </span>
 
         </button>
-        <p class="text-xs mt-5">If you get all 3 slots equal, you win 25.000 MIST</p>
+        <p class="text-xs mt-5">If you guess the coin's outcome, your wins will be equal to your stake</p>
       </div>
     </div>
   </main>

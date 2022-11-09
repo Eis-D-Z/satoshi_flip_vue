@@ -1,0 +1,31 @@
+{
+    "jsonrpc": "2.0",
+    "result": {
+        "txBytes": "VHJhbnNhY3Rpb25EYXRhOjoAApj2dQJ99X6SXZHbYcl8cJ9iwDGuAQAAAAAAAAAgEXuPlYSBSfByge+YHJY5LUowf109PPGRwDBP3X4sRKAMc2F0b3NoaV9mbGlwCnN0YXJ0X2dhbWUAAwAhID0ZIR3w0EMaMY9W7fRp4emCIc59iiGgl6rZsSWt2LBYAQBmkKIAS/Gvwka5ir6Yfujc7rtGIwIAAAAAAAAAICgOsuGkMKjWU3W18JPWhc4c2DOZn+TZhzrN9tHl441BAAhkAAAAAAAAAHjnEkFjRqp/NX3MZA7PkYESqG9z/KnRq4Pv+Zic6jAEdNpahpnzO/YBAAAAAAAAACDQqbfYgnHcpNyWH3UQFL51QOlpNSbQLZ8uYe3xNL7YxwEAAAAAAAAAECcAAAAAAAA=",
+        "gas": {
+            "objectId": "0xfca9d1ab83eff9989cea300474da5a8699f33bf6",
+            "version": 1,
+            "digest": "0Km32IJx3KTclh91EBS+dUDpaTUm0C2fLmHt8TS+2Mc="
+        },
+        "inputObjects": [
+            {
+                "ImmOrOwnedMoveObject": {
+                    "objectId": "0x6690a2004bf1afc246b98abe987ee8dceebb4623",
+                    "version": 2,
+                    "digest": "KA6y4aQwqNZTdbXwk9aFzhzYM5mf5NmHOs320eXjjUE="
+                }
+            },
+            {
+                "MovePackage": "0x98f675027df57e925d91db61c97c709f62c031ae"
+            },
+            {
+                "ImmOrOwnedMoveObject": {
+                    "objectId": "0xfca9d1ab83eff9989cea300474da5a8699f33bf6",
+                    "version": 1,
+                    "digest": "0Km32IJx3KTclh91EBS+dUDpaTUm0C2fLmHt8TS+2Mc="
+                }
+            }
+        ]
+    },
+    "id": 1
+}

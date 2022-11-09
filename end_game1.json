@@ -1,0 +1,30 @@
+{
+    "jsonrpc": "2.0",
+    "result": {
+        "txBytes": "VHJhbnNhY3Rpb25EYXRhOjoAApj2dQJ99X6SXZHbYcl8cJ9iwDGuAQAAAAAAAAAgEXuPlYSBSfByge+YHJY5LUowf109PPGRwDBP3X4sRKAMc2F0b3NoaV9mbGlwCGVuZF9nYW1lAAIBAaQj17Oe0inI77lohyPNAl2JpxamAQAAAAAAAAAADAtzdXBlcnNlY3JldHjnEkFjRqp/NX3MZA7PkYESqG9z/KnRq4Pv+Zic6jAEdNpahpnzO/YCAAAAAAAAACD3RQ9Jl/A5PrmIo3LbM6tBXMf3TcVlG4jfsDmF2UpdhQEAAAAAAAAAECcAAAAAAAA=",
+        "gas": {
+            "objectId": "0xfca9d1ab83eff9989cea300474da5a8699f33bf6",
+            "version": 2,
+            "digest": "90UPSZfwOT65iKNy2zOrQVzH903FZRuI37A5hdlKXYU="
+        },
+        "inputObjects": [
+            {
+                "SharedMoveObject": {
+                    "id": "0xa423d7b39ed229c8efb9688723cd025d89a716a6",
+                    "initial_shared_version": 1
+                }
+            },
+            {
+                "MovePackage": "0x98f675027df57e925d91db61c97c709f62c031ae"
+            },
+            {
+                "ImmOrOwnedMoveObject": {
+                    "objectId": "0xfca9d1ab83eff9989cea300474da5a8699f33bf6",
+                    "version": 2,
+                    "digest": "90UPSZfwOT65iKNy2zOrQVzH903FZRuI37A5hdlKXYU="
+                }
+            }
+        ]
+    },
+    "id": 1
+}

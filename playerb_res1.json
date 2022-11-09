@@ -1,0 +1,37 @@
+{
+    "jsonrpc": "2.0",
+    "result": {
+        "txBytes": "VHJhbnNhY3Rpb25EYXRhOjoAApj2dQJ99X6SXZHbYcl8cJ9iwDGuAQAAAAAAAAAgEXuPlYSBSfByge+YHJY5LUowf109PPGRwDBP3X4sRKAMc2F0b3NoaV9mbGlwA2JldAADAQGkI9ezntIpyO+5aIcjzQJdiacWpgEAAAAAAAAAAAEBAQAB06Fec95kPJxR5sF1cn7fenucdgEAAAAAAAAAIHjO9b0qfWX5gos/h0bYt00A17cZJsaiOLiKtiXrz5xBjB4DBQa+rd/3qy+ZI4E8V2/inQIdq9P2ioylEoJHPr9iXdj5bmN0tAMAAAAAAAAAIPJodWgNoCXgw6j8/XRTn83XG7pLe+WR9jXGP3qnp3X/AQAAAAAAAAAQJwAAAAAAAA==",
+        "gas": {
+            "objectId": "0x1dabd3f68a8ca51282473ebf625dd8f96e6374b4",
+            "version": 3,
+            "digest": "8mh1aA2gJeDDqPz9dFOfzdcbukt75ZH2NcY/eqendf8="
+        },
+        "inputObjects": [
+            {
+                "SharedMoveObject": {
+                    "id": "0xa423d7b39ed229c8efb9688723cd025d89a716a6",
+                    "initial_shared_version": 1
+                }
+            },
+            {
+                "ImmOrOwnedMoveObject": {
+                    "objectId": "0x01d3a15e73de643c9c51e6c175727edf7a7b9c76",
+                    "version": 1,
+                    "digest": "eM71vSp9ZfmCiz+HRti3TQDXtxkmxqI4uIq2JevPnEE="
+                }
+            },
+            {
+                "MovePackage": "0x98f675027df57e925d91db61c97c709f62c031ae"
+            },
+            {
+                "ImmOrOwnedMoveObject": {
+                    "objectId": "0x1dabd3f68a8ca51282473ebf625dd8f96e6374b4",
+                    "version": 3,
+                    "digest": "8mh1aA2gJeDDqPz9dFOfzdcbukt75ZH2NcY/eqendf8="
+                }
+            }
+        ]
+    },
+    "id": 1
+}
