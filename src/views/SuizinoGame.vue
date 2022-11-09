@@ -39,9 +39,6 @@ const wheelSlots = reactive([
 ]);
 
 let initialSpinInterval = ref();
-onMounted(()=>{
-  initialSpinInterval.value = setupSpinningInterval(120);
-});
 
 const getNewSecretAndHash = () => {
   const secret = String(Math.floor(Math.random() * 10000000));
@@ -51,13 +48,13 @@ const getNewSecretAndHash = () => {
   return {secret: secret, hash: hash};
 }
 
-const startGame = () => {
+const createGame = () => {
   if (gameInitialized.value || gameStarted.value) return;
   const coinId = getSuitableCoinId(10000);
   const {secret, hash} = getNewSecret();
   currentSecret = secret;
   const minBet = 100;
-
+  gameResults.value = [];
 
   executeMoveCall({
     packageObjectId: moduleAddress,
@@ -78,7 +75,8 @@ const startGame = () => {
   })
 }
 
-const executeGamble = () => {
+const executeGamble = (ev) => {
+  playerGuess.value = ev.target.id === "heads"? 1 : 0;
   const address = getAddress();
   if(!address) return;
   if(gameStarted.value) return;
@@ -96,34 +94,47 @@ const executeGamble = () => {
     arguments: [currentGameId, playerGuess.value, coinId],
     function: 'gamble',
     gasBudget: 10000
-  }).then(res =>{
+  }).then(res => {
     totalGames.value++;
     const status = res?.EffectsCert?.effects?.status?.status;
 
     if(status === 'success'){
       // If it is a success then we can end the game
-      
-      // let FlipEventResult = res?.effects?.events?.find(x => x.moveEvent) || {};
-      // let fields = FlipEventResult?.moveEvent?.fields;
-      // gameResultsObject.value = fields;
-      // gameResults.value = [fields.slot_1, fields.slot_2, fields.slot_3];
+      executeMoveCall({
+        packageObjectId: moduleAddress,
+        module: 'satoshi_flip',
+        typeArguments: [],
+        arguments: [currentGameId, currentSecret],
+        function: 'end_game',
+        gasBudget: 10000
+      }).then(res => {
+        const =status = res?.EffectsCert?.effects?.status?.status;
 
-      // We just mark all slots as "started" and we let the interval that is already running
-      // take care of showing the results. To make it more smooth,
-      for(let [index, slot] of wheelSlots.entries()){
-        slot.started = true;
-        // setTimeout(()=>{
-        //
-        // }, (index+1) * 600); // start wih 300ms difference
-      }
-
+        if (status === 'success') {
+          let gameResultEvents = res?.EffectsCert?.effects?.effects?.events;
+          // get outcome
+          gameStatus.value = gameStatuses.LOSS;
+          gameResult.value = playerGuess.value === 1 : ["tails", "tails"] : ["heads", "heads"];
+          for (let event of gameResultEvents) {
+            if (event?.coinBalanceChange && event?.coinBalanceChange?.owner?.AddressOwner === getAddress()) {
+              gameStatus.value = gameStatuses.WIN;
+              gameResult.value = playerGuess.value === 1 : ["heads", "heads"] : ["tails", "tails"];
+            }
+          }
+          // We just mark all slots as "started" and we let the interval that is already running
+          // take care of showing the results. To make it more smooth,
+          for(let [index, slot] of wheelSlots.entries()){
+            slot.started = true;
+            setTimeout(()=>{}, (index+1) * 600); // start wih 300ms difference
+          }
+        }
+      })
     }else{
       uiStore.setNotification(res?.effects?.status?.error);
       resetGame();
     }
   }).catch(e=>{
     resetGame();
-
     uiStore.setNotification(e.message);
   })
 }
@@ -152,7 +163,10 @@ const setupSpinningInterval = (timeout) => {
 const clearSpinningInterval = () => {
   clearInterval(initialSpinInterval.value);
 }
-
+onMounted(()=>{
+  initialSpinInterval.value = setupSpinningInterval(120);
+  createGame();
+});
 onUnmounted(()=>{
   clearSpinningInterval();
 });
@@ -169,8 +183,7 @@ const resetGame = () => {
   gameStatus.value = gameStatuses.STANDBY;
   gameResultsObject.value = {};
   setupSpinningInterval(120);
-}
-const startGame = () => {
+  createGame();
 }
 
 const checkGameStatus = () =>{
@@ -263,7 +276,7 @@ const checkGameStatus = () =>{
           </div>
           <span v-else class="flex items-center">
             <div v-html="logo" class="logo-icon"></div>
-            {{totalGames === 0 ? 'SPIN NOW': 'PLAY AGAIN'}} <span class="ml-2 text-sm">(5000 Mist)
+            Tails <span class="ml-2 text-sm">(5000 Mist)
         </span>
           </span>
 

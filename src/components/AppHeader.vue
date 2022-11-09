@@ -2,7 +2,7 @@
 import {onMounted, watch} from "vue";
 import {useWallet} from "../helpers/wallet";
 import {useUiStore} from "../stores/ui";
-import {moduleAddress, moduleName, casinoAddress} from "../helpers/constants";
+import {moduleAddress, moduleName} from "../helpers/constants";
 const {
   walletProviders,
   isPermissionGranted, logout, permissionGrantedError,verifyWalletPermissions, getSuitableCoinId, requestWalletAccess, executeMoveCall, getAddress } = useWallet();

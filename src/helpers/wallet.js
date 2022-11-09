@@ -1,5 +1,5 @@
 import {JsonRpcProvider} from "@mysten/sui.js";
-import {casinoAddress, localStorageKeys, moduleAddress, suiRpcUrl} from "./constants";
+import {localStorageKeys, moduleAddress, suiRpcUrl} from "./constants";
 import {computed, onMounted, ref} from "vue";
 import {useAuthStore} from "../stores/auth";
 import {useUiStore} from "../stores/ui";
