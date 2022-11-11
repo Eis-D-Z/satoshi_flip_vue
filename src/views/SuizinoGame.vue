@@ -307,7 +307,7 @@ const checkGameStatus = () =>{
         </p>
 
       </div>
-      <div class="lucky-wheel-slots grid grid-cols-3 gap-2 md:gap-5">
+      <div class="lucky-wheel-slots">
         <div v-for="slot of wheelSlots" :key="slot.id" :id="`wheel-slot-${slot.id}`"
              class="lucky-wheel-slot bg-white overflow-hidden dark:bg-gray-700 h-[250px] md:h-[320px] rounded-lg shadow flex items-center justify-center"
              :class="`${gameStatus.toLowerCase()}`">
