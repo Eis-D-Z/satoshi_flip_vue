@@ -8,11 +8,13 @@ export const useAuthStore = defineStore({
         walletProvider: localStorage.getItem(localStorageKeys.walletProvider),
         hasWalletPermission: false,
         userSuiAddress: localStorage.getItem(localStorageKeys.walletProvider),
-        casinoAdmin: {
-            isAdmin: false,
-            objectAddress: null
-        },
+        // casinoAdmin: {
+        //     isAdmin: false,
+        //     objectAddress: null
+        // },
+        signer: null,
         coins: [],
+        bankCoins: [],
         toggleWalletAuthModal: false
     }),
 

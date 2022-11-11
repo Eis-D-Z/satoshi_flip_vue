@@ -1,7 +1,8 @@
 export const suiRpcUrl = 'https://fullnode.devnet.sui.io:443'
-export const moduleAddress = '0x98f675027df57e925d91db61c97c709f62c031ae';
+export const moduleAddress = '0xf748208f86300ab438927afcccc97dc8f8c2b4f1'; // this should be called packageAddress
 export const moduleName = 'satoshi_flip';
-export const bankerAddress="0x78e712416346aa7f357dcc640ecf918112a86f73";
+export const bankerAddress = "0x378ed0d075ee565f72e1073af97c86a6eafa56b0";
+export const keySeed = "cdMjjRWqnc3mG3pktUYLwHfqD4SvpkJdWHXJBeBjhU8=";
 export const localStorageKeys = {
     address: 'user_sui_address',
     walletProvider: 'wallet_provider'

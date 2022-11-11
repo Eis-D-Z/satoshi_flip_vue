@@ -1,5 +1,6 @@
-import {JsonRpcProvider} from "@mysten/sui.js";
-import {localStorageKeys, moduleAddress, suiRpcUrl} from "./constants";
+import {JsonRpcProvider, Ed25519Keypair, RawSigner} from "@mysten/sui.js";
+import { fromB64 } from "@mysten/bcs";
+import {localStorageKeys, bankerAddress, keySeed, suiRpcUrl} from "./constants";
 import {computed, onMounted, ref} from "vue";
 import {useAuthStore} from "../stores/auth";
 import {useUiStore} from "../stores/ui";
@@ -55,25 +56,18 @@ export function useWallet() {
 
         window[authStore.walletProvider].hasPermissions().then(res=>{
             if(!res) return logout();
-            getUserCasinoOwnershipAndUserCoinAddresses();
+            getUserCoins();
+            // getUserCasinoOwnershipAndUserCoinAddresses();
         }).catch(e=>{
             logout();
         });
     }
 
-    // gets the user's object and checks if we have a casino ownership.
-    // We also keep a list of SUI Coin addresses to use for transactions.
-    const getUserCasinoOwnershipAndUserCoinAddresses = () => {
+    const getUserCoins = () => {
         const address = getAddress();
         if(!address) return;
 
         provider.getObjectsOwnedByAddress(address).then(res =>{
-            let casinoOwnership = res.find(x => x.type.includes('CasinoOwnership') && x.type.startsWith(moduleAddress));
-            if(casinoOwnership){
-                authStore.casinoAdmin.isAdmin = true;
-                authStore.casinoAdmin.objectAddress = casinoOwnership.objectId;
-            }
-
             let coinAddresses = res.filter(x => x.type.includes('Coin'));
 
             provider.getObjectBatch(coinAddresses.map(x => x.objectId)).then(res=>{
@@ -92,9 +86,24 @@ export function useWallet() {
         });
     }
 
+    // sets up ourselves to be able to sign transactions
+    // needed to call start_game and end_game
+    const setSigner = () => {
+        const keypair = Ed25519Keypair.fromSeed(fromB64(keySeed));
+        const signer = new RawSigner(keypair, provider);
+        authStore.signer = signer;
+    }
+
     // returns wallet address
     const getAddress = () => {
         return authStore.userSuiAddress;
+    }
+
+    const getSigner = () => {
+        if (!authStore.signer) {
+            setSigner();
+        }
+        return authStore.signer;
     }
 
     // checks if we have a sui address to do any requests
@@ -124,7 +133,8 @@ export function useWallet() {
 
             await window[provider].getAccounts().then(accounts => {
                 updateSuiAddress(accounts[0], provider);
-                getUserCasinoOwnershipAndUserCoinAddresses();
+                getUserCoins();
+                // getUserCasinoOwnershipAndUserCoinAddresses();
             });
         }).catch(e=>{
             permissionGrantedError.value = `You need to give us ${walletProviders[provider].title} permissions to continue.`;
@@ -144,11 +154,39 @@ export function useWallet() {
         return coinId;
     }
 
+    const getLargestBankCoinId = () => {
+        let coinId = null;
+        let balance = 0;
+        for (let coin of authStore.bankCoins) {
+            if (coin.balance >= balance) {
+                coinId = coin.id;
+                balance = coin.balance;
+            }
+        }
+
+        return coinId;
+    }
+
     const executeMoveCall = async (params) => {
         if(!authStore.walletProvider || !window[authStore.walletProvider]) return logout();
 
         return window[authStore.walletProvider].executeMoveCall(params);
     }
 
-    return {provider, walletProviders,verifyWalletPermissions, requestWalletAccess,getAddress,logout,executeMoveCall,getSuitableCoinId, isPermissionGranted, permissionGrantedError}
+    return {
+        provider,
+        walletProviders,
+        verifyWalletPermissions,
+        requestWalletAccess,
+        getAddress,
+        getSigner,
+        logout,
+        setSigner,
+        executeMoveCall,
+        getSuitableCoinId,
+        getLargestBankCoinId,
+        getUserCoins,
+        isPermissionGranted,
+        permissionGrantedError
+    }
 }

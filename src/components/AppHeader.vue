@@ -2,20 +2,19 @@
 import {onMounted, watch} from "vue";
 import {useWallet} from "../helpers/wallet";
 import {useUiStore} from "../stores/ui";
-import {moduleAddress, moduleName} from "../helpers/constants";
-const {
-  walletProviders,
-  isPermissionGranted, logout, permissionGrantedError,verifyWalletPermissions, getSuitableCoinId, requestWalletAccess, executeMoveCall, getAddress } = useWallet();
 import { useDark, useToggle } from '@vueuse/core';
 import {useAuthStore} from "../stores/auth";
 import Modal from "./Modal.vue";
+
+const {
+  walletProviders,
+  isPermissionGranted, logout, permissionGrantedError,verifyWalletPermissions, requestWalletAccess, setBankCoins } = useWallet();
 
 const uiStore = useUiStore();
 const authStore = useAuthStore();
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-
 
 onMounted(()=>{
   verifyWalletPermissions();
@@ -33,33 +32,6 @@ const disconnect = () => {
   logout();
   state.profile = null;
 }
-
-onMounted(()=>{
-
-})
-// deposits to casino
-const depositToCasino = async () => {
-
-  if(!authStore.casinoAdmin.isAdmin) return; // only admins can deposit to casino.
-  const address = getAddress();
-  if(!address) return;
-
-  const amount = 1000000;
-  const coinId = getSuitableCoinId(amount);
-
-  return executeMoveCall({
-        packageObjectId: moduleAddress,
-        module: moduleName,
-        typeArguments: [],
-        arguments: [authStore.casinoAdmin.objectAddress, casinoAddress,amount, coinId],
-        function: 'depositToCasino',
-        gasBudget: 1000
-  }).then(res=>{
-    uiStore.setNotification( amount + " successfully deposited to casino", "success");
-  }).catch(e=>{
-    uiStore.setNotification(e.message);
-  })
-}
 </script>
 
 <template>
@@ -70,7 +42,7 @@ const depositToCasino = async () => {
         <div class="col-span-4">
 
           <h3 class="text-2xl">
-            Suizino
+            Satoshi Flip
           </h3>
 
 
@@ -88,9 +60,6 @@ const depositToCasino = async () => {
             </path>
             </svg>
           </button>
-
-          <button v-if="authStore.casinoAdmin.isAdmin" class="bg-gray-800 dark:bg-gray-800 flex items-center text-white px-5 py-2 mr-2 rounded-full"
-                  @click="depositToCasino">Deposit to Casino</button>
 
           <button v-if="!authStore.hasWalletPermission"
                   class="bg-gray-800 dark:bg-gray-800 flex items-center text-white px-5 py-2 rounded-full"
